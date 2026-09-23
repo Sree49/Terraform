@@ -6,5 +6,9 @@
 terraform.rc
 terraform.exe
 
+*.ppk
+pemkey.ppk
+pempubkey
+pempubkey.pub
 
 .terraform.tfstate.lock.info
