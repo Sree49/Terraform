@@ -9,3 +9,7 @@ variable "RG_Location" {
 variable "subnet_id" {
   type = string
 }
+
+variable "lb_backend_address_pool_id" {
+  type=string
+}

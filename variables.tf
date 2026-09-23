@@ -10,3 +10,4 @@ variable "RG_Location" {
 variable "VNET_Name" {
   type = string
 }
+
