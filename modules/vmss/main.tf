@@ -19,7 +19,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   admin_username      = "adminuser"
   computer_name_prefix = "vm-"
   upgrade_mode = "Automatic"
-  user_data=file("./modules/vmss/cloud-init.yaml")
+  user_data = filebase64("${path.module}/cloud-init.yaml")
 
 
   admin_ssh_key {

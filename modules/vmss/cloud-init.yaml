@@ -8,5 +8,5 @@ packages:
 runcmd:
   - systemctl enable docker
   - systemctl start docker
-  - docker pull sreenija4363/nginx:latest
-  - docker run -d -p 80:80 --name webserver sreenija4363/nginx:latest
+  - docker pull sreenija4363/nginx-image:latest
+  - docker run -d -p 80:80 --name webserver sreenija4363/nginx-image:latest
