@@ -17,6 +17,7 @@ module "VMSS" {
   RG_Location = module.RG.RG_Location
   subnet_id   = module.Network.subnet_id
   lb_backend_address_pool_id = module.LoadBalancer.lb_backend_address_pool_id
+  VNET_Name   = module.Network.VNet_Name
 }
 
 module "LoadBalancer" {

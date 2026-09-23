@@ -13,3 +13,7 @@ variable "subnet_id" {
 variable "lb_backend_address_pool_id" {
   type=string
 }
+
+variable "VNET_Name" {
+  type=string
+}
