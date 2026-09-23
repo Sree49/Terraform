@@ -10,5 +10,8 @@ terraform.exe
 pemkey.ppk
 pempubkey
 pempubkey.pub
+pemkey.pem
+pemkey.key
+pemkey
 
 .terraform.tfstate.lock.info

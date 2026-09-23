@@ -19,7 +19,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   admin_username      = "adminuser"
   computer_name_prefix = "vm-"
   upgrade_mode = "Automatic"
-  user_data = filebase64("${path.module}/cloud-init.yaml")
+  #user_data = filebase64("${path.module}/cloud-init.yaml")
+  custom_data = filebase64("${path.module}/cloud-init.yaml")
+
 
 
   admin_ssh_key {
@@ -50,5 +52,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       subnet_id = var.subnet_id
       load_balancer_backend_address_pool_ids = [var.lb_backend_address_pool_id]    
       }
+
   }
+
 }

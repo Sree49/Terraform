@@ -30,7 +30,8 @@ resource "azurerm_lb_probe" "lb_probe" {
   loadbalancer_id = azurerm_lb.LB.id
   name            = "http-probe"
   port            = 80
-  protocol        = "Tcp"
+  protocol        = "Http"
+  request_path    = "/"
 }
 
 
