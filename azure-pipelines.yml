@@ -67,3 +67,4 @@ stages:
               command: 'apply'
               commandOptions: '-auto-approve'
               environmentServiceNameAzureRM: '$(service-connection)'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
