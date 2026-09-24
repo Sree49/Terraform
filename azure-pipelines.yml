@@ -1,0 +1,70 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: 'Terraform-Variables'
+
+stages:
+  - stage: TerraformValidate
+    displayName: 'Terraform Validate'
+    jobs:
+      - job: InstallandaValidate
+        displayName: 'Install Terraform and Validate'
+        steps:
+          - task: TerraformInstaller@1
+            displayName: 'Terraform Install'
+            inputs:
+              terraformVersion: '$(terraform_version)'
+
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: '$(service-connection)'
+              backendAzureRmResourceGroupName: 'RG'
+              backendAzureRmStorageAccountName: 'tfstatefilestore1678'
+              backendAzureRmContainerName: 'tfstate-container'
+              backendAzureRmKey: 'terraform.tfstate'
+          
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+
+  - stage: TerraformPlan
+    displayName: 'Terraform Plan'
+    dependsOn: TerraformValidate
+    condition: succeeded()
+    jobs:
+      - job: Plan
+        displayName: 'Terraform Plan'
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: '$(service-connection)'
+
+  - stage: TerraformApply
+    displayName: 'Terraform Apply'
+    dependsOn: TerraformPlan
+    condition: succeeded()
+    jobs:
+      - job: Apply
+        displayName: 'Terraform Apply'
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              commandOptions: '-auto-approve'
+              environmentServiceNameAzureRM: '$(service-connection)'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'

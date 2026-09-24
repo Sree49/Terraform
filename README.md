@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Terraform
 
 1. Create App registration in azure portal and provide Contributor access to create and manage Azure resources.
@@ -11,3 +12,6 @@
 4. Basic Nginx application running on port 80. \
    <img src="./images/app.png" alt="Project Screenshot" width="400">
 
+=======
+Azure Terraform Project
+>>>>>>> master

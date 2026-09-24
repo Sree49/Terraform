@@ -1,0 +1,17 @@
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+
+.terraformrc
+terraform.rc
+terraform.exe
+
+*.ppk
+pemkey.ppk
+pempubkey
+pempubkey.pub
+pemkey.pem
+pemkey.key
+pemkey
+
+.terraform.tfstate.lock.info
