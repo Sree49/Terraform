@@ -28,7 +28,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              backendServiceArm: 'Azure subscription 1(602df268-75e9-4f25-b0e5-bb36790bd552)'
+              backendServiceArm: '$(service-connection)'
               backendAzureRmResourceGroupName: 'RG'
               backendAzureRmStorageAccountName: 'tfstatefilestore1678'
               backendAzureRmContainerName: 'tfstate-container'
@@ -51,7 +51,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              environmentServiceNameAzureRM: 'Azure subscription 1(602df268-75e9-4f25-b0e5-bb36790bd552)'
+              environmentServiceNameAzureRM: '$(service-connection)'
 
   - stage: TerraformApply
     displayName: 'Terraform Apply'
@@ -66,4 +66,4 @@ stages:
               provider: 'azurerm'
               command: 'apply'
               commandOptions: '-auto-approve'
-              environmentServiceNameAzureRM: 'Azure subscription 1(602df268-75e9-4f25-b0e5-bb36790bd552)'
+              environmentServiceNameAzureRM: '$(service-connection)'
