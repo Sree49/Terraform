@@ -9,22 +9,22 @@ module "Network" {
   RG_Name     = module.RG.RG_Name
   RG_Location = module.RG.RG_Location
   VNET_Name   = var.VNET_Name
-  depends_on = [module.RG]
+  depends_on  = [module.RG]
 }
 
 module "VMSS" {
-  source      = "./modules/vmss"
-  RG_Name     = module.RG.RG_Name
-  RG_Location = module.RG.RG_Location
-  subnet_id   = module.Network.subnet_id
+  source                     = "./modules/vmss"
+  RG_Name                    = module.RG.RG_Name
+  RG_Location                = module.RG.RG_Location
+  subnet_id                  = module.Network.subnet_id
   lb_backend_address_pool_id = module.LoadBalancer.lb_backend_address_pool_id
-  VNET_Name   = module.Network.VNet_Name
-  depends_on = [module.Network, module.LoadBalancer]
+  VNET_Name                  = module.Network.VNet_Name
+  depends_on                 = [module.Network]
 }
 
 module "LoadBalancer" {
   source      = "./modules/loadbalancer"
   RG_Name     = module.RG.RG_Name
   RG_Location = module.RG.RG_Location
-  depends_on = [module.RG]
+  depends_on  = [module.Network]
 }

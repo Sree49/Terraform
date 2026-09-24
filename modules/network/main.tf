@@ -29,6 +29,17 @@ security_rule {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+  security_rule {
+    name                       = "rule2"
+    priority                   = 200
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "AzureLoadBalancer"
+    destination_address_prefix = "*"
+  }
 
 }
 
@@ -39,3 +50,33 @@ resource "azurerm_subnet_network_security_group_association" "NSGAssociation" {
 }
 
 
+resource "azurerm_nat_gateway" "nat-gateway" {
+  name                    = "nat-gateway"
+  location                = var.RG_Location
+  resource_group_name     = var.RG_Name
+  sku_name                = "Standard"
+  idle_timeout_in_minutes = 10
+}
+
+
+resource "azurerm_public_ip" "nat-gateway-pip" {
+  name                = "nat-gateway-pip"
+  location            = var.RG_Location
+  resource_group_name = var.RG_Name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+
+
+resource "azurerm_nat_gateway_public_ip_association" "nat-gateway-pip-association" {
+  nat_gateway_id       = azurerm_nat_gateway.nat-gateway.id
+  public_ip_address_id = azurerm_public_ip.nat-gateway-pip.id
+  depends_on = [azurerm_nat_gateway.nat-gateway, azurerm_public_ip.nat-gateway-pip]
+}
+
+resource "azurerm_subnet_nat_gateway_association" "nat-gateway-subnet-association" {
+  subnet_id      = azurerm_subnet.subnet.id
+  nat_gateway_id = azurerm_nat_gateway.nat-gateway.id
+  depends_on = [azurerm_subnet.subnet, azurerm_nat_gateway.nat-gateway]
+}
