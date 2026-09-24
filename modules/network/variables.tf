@@ -1,11 +1,11 @@
 variable "RG_Name" {
-  type=string
+  type = string
 }
 
 variable "RG_Location" {
-  type=string
+  type = string
 }
 
 variable "VNET_Name" {
-  type=string
+  type = string
 }

@@ -1,9 +1,9 @@
 variable "RG_Name" {
-  type=string
+  type = string
 }
 
 variable "RG_Location" {
-  type=string
+  type = string
 }
 
 variable "subnet_id" {
@@ -11,9 +11,9 @@ variable "subnet_id" {
 }
 
 variable "lb_backend_address_pool_id" {
-  type=string
+  type = string
 }
 
 variable "VNET_Name" {
-  type=string
+  type = string
 }

@@ -13,7 +13,7 @@ resource "azurerm_public_ip" "pubip" {
   resource_group_name = var.RG_Name
   allocation_method   = "Static"
   sku                 = "Standard"
-  
+
 }
 
 resource "azurerm_bastion_host" "bastion" {
@@ -26,5 +26,5 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = azurerm_subnet.bastionsubnet.id
     public_ip_address_id = azurerm_public_ip.pubip.id
   }
-  
+
 }

@@ -3,6 +3,9 @@ resource "azurerm_virtual_network" "VNET" {
   location            = var.RG_Location
   resource_group_name = var.RG_Name
   address_space       = ["10.0.1.0/24"]
+  tags = {
+    environment = "Terraform-Demo"
+  }
 }
 
 resource "azurerm_subnet" "subnet" {
@@ -17,8 +20,10 @@ resource "azurerm_network_security_group" "NSG" {
   name                = "NSG1"
   location            = var.RG_Location
   resource_group_name = var.RG_Name
-
-security_rule {
+  tags = {
+    environment = "Terraform-Demo"
+  }
+  security_rule {
     name                       = "rule1"
     priority                   = 300
     direction                  = "Inbound"
@@ -46,7 +51,7 @@ security_rule {
 resource "azurerm_subnet_network_security_group_association" "NSGAssociation" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.NSG.id
-  depends_on = [azurerm_subnet.subnet, azurerm_network_security_group.NSG]
+  depends_on                = [azurerm_subnet.subnet, azurerm_network_security_group.NSG]
 }
 
 
@@ -56,6 +61,9 @@ resource "azurerm_nat_gateway" "nat-gateway" {
   resource_group_name     = var.RG_Name
   sku_name                = "Standard"
   idle_timeout_in_minutes = 10
+  tags = {
+    environment = "Terraform-Demo"
+  }
 }
 
 
@@ -65,6 +73,9 @@ resource "azurerm_public_ip" "nat-gateway-pip" {
   resource_group_name = var.RG_Name
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags = {
+    environment = "Terraform-Demo"
+  }
 }
 
 
@@ -72,11 +83,11 @@ resource "azurerm_public_ip" "nat-gateway-pip" {
 resource "azurerm_nat_gateway_public_ip_association" "nat-gateway-pip-association" {
   nat_gateway_id       = azurerm_nat_gateway.nat-gateway.id
   public_ip_address_id = azurerm_public_ip.nat-gateway-pip.id
-  depends_on = [azurerm_nat_gateway.nat-gateway, azurerm_public_ip.nat-gateway-pip]
+  depends_on           = [azurerm_nat_gateway.nat-gateway, azurerm_public_ip.nat-gateway-pip]
 }
 
 resource "azurerm_subnet_nat_gateway_association" "nat-gateway-subnet-association" {
   subnet_id      = azurerm_subnet.subnet.id
   nat_gateway_id = azurerm_nat_gateway.nat-gateway.id
-  depends_on = [azurerm_subnet.subnet, azurerm_nat_gateway.nat-gateway]
+  depends_on     = [azurerm_subnet.subnet, azurerm_nat_gateway.nat-gateway]
 }
