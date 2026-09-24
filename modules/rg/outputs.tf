@@ -5,3 +5,4 @@ output "RG_Name" {
 output "RG_Location" {
   value = var.RG_Location
 }
+

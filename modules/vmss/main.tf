@@ -15,10 +15,15 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   resource_group_name  = var.RG_Name
   location             = var.RG_Location
   sku                  = "Standard_D4_v5"
-  instances            = 1
+  instances            = 2
   admin_username       = "adminuser"
   computer_name_prefix = "vm-"
-  upgrade_mode         = "Automatic"
+  automatic_instance_repair {
+    enabled      = true
+    grace_period = "PT10M"
+  }
+  health_probe_id = var.lb_probe_id
+
   #user_data = filebase64("${path.module}/cloud-init.yaml")
   custom_data = filebase64("${path.module}/cloud-init.yaml")
 
@@ -45,7 +50,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   network_interface {
-    name    = "NIC"
+    name    = "vmssnic"
     primary = true
 
     ip_configuration {

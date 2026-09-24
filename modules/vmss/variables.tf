@@ -17,3 +17,7 @@ variable "lb_backend_address_pool_id" {
 variable "VNET_Name" {
   type = string
 }
+
+variable "lb_probe_id" {
+  type = string
+}
