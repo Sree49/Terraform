@@ -9,3 +9,11 @@ output "VNet_ID" {
 output "subnet_id" {
   value = azurerm_subnet.subnet.id
 }
+
+output "natgateway_id" {
+  value = azurerm_nat_gateway.nat-gateway.id
+}
+
+output "nat-gateway-pip" {
+  value = azurerm_public_ip.nat-gateway-pip
+}
